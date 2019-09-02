@@ -23,10 +23,21 @@ exports.heartbeat = functions.https.onRequest(async (request, response) => {
 });
 
 exports.getLatestPosts = functions.https.onRequest(async (req, res) => {
+    res.set('Access-Control-Allow-Origin', "*")
     const snapshot = await firestore
         .collection("/rootrefcollection/QQG2McwjR2Bohi9OwQzP/posts")
         .orderBy("createdate", "desc")
         .limit(100)
+        .get()
+    res.json(snapshot.docs.map(doc => doc.data()))
+})
+
+exports.getCategory = functions.https.onRequest(async (req, res) => {
+    res.set('Access-Control-Allow-Origin', "*")
+    const category = req.query.category;
+    const snapshot = await firestore
+        .collection("/rootrefcollection/QQG2McwjR2Bohi9OwQzP/posts")
+        .where('category', '==', category)
         .get()
     res.json(snapshot.docs.map(doc => doc.data()))
 })
