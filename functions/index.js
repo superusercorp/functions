@@ -78,7 +78,9 @@ exports.persistemail = functions.https.onRequest(async (req, res) => {
         emailPerm = JSON.parse(email)
             // email = JSON.parse(req.body)
             await firestore.collection("/newsletter/").doc(emailPerm.email.toString()).set({
-                email: emailPerm.email.toString()
+                email: emailPerm.email.toString(),
+                status: "subscribed",
+                created: Date().toLocaleString()
             })
             res.status(201).send(emailPerm.email.toString() + " is subscribed to the newsletter.")
      }
