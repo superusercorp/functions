@@ -2,6 +2,8 @@
   "name": "functions",
   "description": "Uppercaser Firebase Functions Quickstart sample",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "firebase-admin": "~7.1.1",
     "firebase-functions": "^2.2.1",
     "heartbeats": "^5.0.1"
