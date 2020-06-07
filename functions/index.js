@@ -34,6 +34,26 @@ exports.getLatestPosts = functions.https.onRequest(async (req, res) => {
     res.json(snapshot.docs.map(doc => doc.data()))
 })
 
+exports.getLatestPosts = functions.https.onRequest(async (req, res) => {
+    res.set('Access-Control-Allow-Origin', "*")
+    const snapshot = await firestore
+        .collection("/rootrefcollection/QQG2McwjR2Bohi9OwQzP/posts")
+        .orderBy("lastupdate", "desc")
+        .limit(100)
+        .get()
+    res.json(snapshot.docs.map(doc => doc.data()))
+})
+
+exports.getArticle = functions.https.onRequest(async (req, res) => {
+    res.set('Access-Control-Allow-Origin', "*")
+    const title = req.query.title;
+    const snapshot = await firestore
+        .collection("/rootrefcollection/QQG2McwjR2Bohi9OwQzP/posts")
+        .where('title', '==', title)
+        .get()
+    res.json(snapshot.docs.map(doc => doc.data()))
+})
+
 exports.getCategory = functions.https.onRequest(async (req, res) => {
     res.set('Access-Control-Allow-Origin', "*")
     const category = req.query.category;
